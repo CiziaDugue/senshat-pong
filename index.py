@@ -9,7 +9,7 @@ msleep = lambda x: time.sleep(x / 1000.0)
 
 #Initialisation des variables : coordonnées de la balle
 x = 2
-y = 6
+y = 4
 
 #Affichage de la balle
 def afficherBalle(x,y):
@@ -38,6 +38,8 @@ while True:
     i = -i
   if y == 0 or y == 7:
     j = -j
+  if y == 1 and (x == z or x == z+1 or x== z+2):
+    i = -i
   if x == 0:
     msleep(600)
     afficherBalle(x,y)
