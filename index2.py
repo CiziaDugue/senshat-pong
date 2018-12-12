@@ -8,59 +8,38 @@ except:
   from sense_emu import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
   sense = SenseHat()
     
-import time, random
+import time
 from time import sleep
 from signal import pause
 
 sense = SenseHat()
+sense.set_imu_config(True, True, True)
 sense.clear()
 msleep = lambda x: time.sleep(x / 1000.0)
 
 #Variables d'incrémentation pour les déplacements
-x_balle = random.randint(2,7)
-y_balle = random.randint(0,7)
-y_raqu = 2
+x_balle = 2
+y_balle = 4
+y_raqu = 0
 incre_x = 1
 incre_y = 1
 
 #Message d'accueil
-def messAccueil():
-  sense.show_message("Pong!", text_colour=[255, 0, 255])
-  for i in range(5,0,-1):
-    sense.show_letter(str(i),[0, 0, 0],[255, 255, 255])
-    sleep(1)
-  sense.clear()
-  
-messAccueil()
+sense.show_message("Pong!", text_colour=[255, 0, 255])
 
 #Affichage de la raquette
 def afficherRaquette():
   global y_raqu
+  orientation = sense.get_orientation()
+  if orientation['r'] > 0 and y_raqu > 0:
+  	y_raqu -= 1
+  if orientation['r'] < 0 and y_raqu < 5:
+  	y_raqu -= 1
   sense.set_pixel(0,y_raqu,0,0,255)
   sense.set_pixel(0,y_raqu+1,0,0,255)
   sense.set_pixel(0,y_raqu+2,0,0,255)
 
 afficherRaquette()
-
-#Déplacement raquette
-def stick_up(event):
-  global y_raqu
-  if event.action == ACTION_PRESSED:
-    if y_raqu > 0:
-      y_raqu -= 1
-    else:
-      y_raqu == 0
-  
-def stick_down(event):
-  global y_raqu  
-  if event.action == ACTION_PRESSED:
-    if y_raqu < 5:
-      y_raqu += 1
-    else:
-      y_raqu = 5
-
-sense.stick.direction_up = stick_up
-sense.stick.direction_down = stick_down
 
 #Affichage de la balle
 def afficherBalle():
@@ -91,15 +70,14 @@ afficherBalle()
 #Boucle principale du jeu
 while True:
   #Afficher balle & raquette + déplacement balle
-  msleep(300)
+  msleep(100)
   sense.clear()
   afficherBalle()
   afficherRaquette()
 
   #Game over
   if x_balle == 0:
-    msleep(300)
-    sense.clear()
+    msleep(100)
     afficherBalle()
     sense.clear()
     sense.show_message("RIP...Looser :(", text_colour=[0, 255, 0])
