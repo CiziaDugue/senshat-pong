@@ -12,13 +12,17 @@ x = 2
 y = 6
 
 #Affichage de la balle
-sense.set_pixel(x,y,255,0,0)
+def afficherBalle(x,y):
+  sense.set_pixel(x,y,255,0,0)
+afficherBalle(x,y)
 
 #Affichage de la raquette
-z = (0,1,2)
-sense.set_pixel(0,z[0],0,0,255)
-sense.set_pixel(0,z[1],0,0,255)
-sense.set_pixel(0,z[2],0,0,255)
+z = 0
+def afficherRaquette(z):
+  sense.set_pixel(0,z,0,0,255)
+  sense.set_pixel(0,z+1,0,0,255)
+  sense.set_pixel(0,z+2,0,0,255)
+afficherRaquette(z)
 
 #Boucle déplacement balle & raquette
 i = 1
@@ -28,18 +32,14 @@ while True:
   y += j
   msleep(600)
   sense.clear()
-  sense.set_pixel(x,y,255,0,0)
-  sense.set_pixel(0,z[0],0,0,255)
-  sense.set_pixel(0,z[1],0,0,255)
-  sense.set_pixel(0,z[2],0,0,255)
+  afficherBalle(x,y)
+  afficherRaquette(z)
   if x == 7:
     i = -i
   if y == 0 or y == 7:
     j = -j
   if x == 0:
     msleep(600)
-    sense.set_pixel(x,y,255,0,0)
+    afficherBalle(x,y)
     sense.clear()
     break
-  
-
