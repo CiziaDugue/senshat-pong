@@ -38,7 +38,7 @@ while True:
     i = -i
   if y == 0 or y == 7:
     j = -j
-  if y == 1 and (x == z or x == z+1 or x== z+2):
+  if x == 1 and (y == z or y == z+1 or y == z+2):
     i = -i
   if x == 0:
     msleep(600)
