@@ -23,13 +23,17 @@ y_raqu = 0
 incre_x = 1
 incre_y = 1
 
-#Affichage de la raquette
-def afficherRaquette(y):
-  sense.set_pixel(0,y,0,0,255)
-  sense.set_pixel(0,y+1,0,0,255)
-  sense.set_pixel(0,y+2,0,0,255)
+#Message d'accueil
+sense.show_message("RBPiPong!", text_colour=[255, 0, 255])
 
-afficherRaquette(y_raqu)
+#Affichage de la raquette
+def afficherRaquette():
+  global y_raqu
+  sense.set_pixel(0,y_raqu,0,0,255)
+  sense.set_pixel(0,y_raqu+1,0,0,255)
+  sense.set_pixel(0,y_raqu+2,0,0,255)
+
+afficherRaquette()
 
 #Déplacement raquette
 def stick_up(event):
@@ -83,13 +87,14 @@ while True:
   msleep(100)
   sense.clear()
   afficherBalle()
-  afficherRaquette(y_raqu)
+  afficherRaquette()
 
   #Game over
   if x_balle == 0:
     msleep(100)
     afficherBalle()
     sense.clear()
+    sense.show_message("RIP! Looser :'(", text_colour=[0, 255, 0])
     break
     
 
