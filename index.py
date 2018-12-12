@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import time
 from sense_hat import SenseHat
 
@@ -25,4 +27,4 @@ while x >= 0 and y >= 0 and x <= 7 and y <= 7:
     i = -i
   if y == 0 or y == 7:
     j = -j
-  
+ 
