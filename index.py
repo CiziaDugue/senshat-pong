@@ -17,7 +17,7 @@ sense.clear()
 msleep = lambda x: time.sleep(x / 1000.0)
 
 #Variables d'incrémentation pour les déplacements
-x_balle = random.randint(2,7)
+x_balle = random.randint(3,7)
 y_balle = random.randint(0,7)
 y_raqu = 2
 incre_x = 1
@@ -99,10 +99,11 @@ while True:
   #Game over
   if x_balle == 0:
     msleep(300)
-    sense.clear()
     afficherBalle()
     sense.clear()
-    sense.show_message("RIP...Looser :(", text_colour=[0, 255, 0])
-    break
+    sense.show_message("RIP..:(", text_colour=[0, 255, 0])
+    messAccueil()
+    x_balle = random.randint(3,7)
+    y_balle = random.randint(0,7)
     
 
