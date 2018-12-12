@@ -23,17 +23,12 @@ y_raqu = 0
 incre_x = 1
 incre_y = 1
 
-#Affichage de la balle
-def afficherBalle(x,y):
-  sense.set_pixel(x,y,255,0,0)
-
-afficherBalle(x_balle,y_balle)
-
 #Affichage de la raquette
 def afficherRaquette(y):
   sense.set_pixel(0,y,0,0,255)
   sense.set_pixel(0,y+1,0,0,255)
   sense.set_pixel(0,y+2,0,0,255)
+
 afficherRaquette(y_raqu)
 
 #Déplacement raquette
@@ -44,7 +39,7 @@ def stick_up(event):
       y_raqu -= 1
     else:
       y_raqu == 0
-  afficherRaquette(y_raqu)
+  
 def stick_down(event):
   global y_raqu  
   if event.action == ACTION_PRESSED:
@@ -52,35 +47,49 @@ def stick_down(event):
       y_raqu += 1
     else:
       y_raqu = 5
-  afficherRaquette(y_raqu)    
 
-#Boucle principale du jeu
-while True:
-  #Afficher balle & raquette + déplacement balle
-  x_balle += incre_x
-  y_balle += incre_y
-  msleep(200)
-  sense.clear()
-  afficherBalle(x_balle,y_balle)
-  afficherRaquette(y_raqu)
+sense.stick.direction_up = stick_up
+sense.stick.direction_down = stick_down
+
+#Affichage de la balle
+def afficherBalle():
+  global x_balle
+  global y_balle
+  global incre_x
+  global incre_y
+  global y_raqu
   
   #Rebond contre les murs
   if x_balle == 7:
     incre_x = -incre_x
+    
   if y_balle == 0 or y_balle == 7:
     incre_y = -incre_y
   
-  #Rebond sur la raquette
+  #Rebond sur la raquette  
   if x_balle == 1 and (y_balle == y_raqu or y_balle == y_raqu+1 or y_balle == y_raqu+2):
     incre_x = -incre_x
   
-  #Déplacement raquette
-  sense.stick.direction_up = stick_up
-  sense.stick.direction_down = stick_down
+  sense.set_pixel(x_balle,y_balle,255,0,0)
   
+  x_balle += incre_x
+  y_balle += incre_y
+
+afficherBalle()
+
+#Boucle principale du jeu
+while True:
+  #Afficher balle & raquette + déplacement balle
+  msleep(100)
+  sense.clear()
+  afficherBalle()
+  afficherRaquette(y_raqu)
+
   #Game over
   if x_balle == 0:
-    msleep(200)
-    afficherBalle(x_balle,y_balle)
+    msleep(100)
+    afficherBalle()
     sense.clear()
     break
+    
+
